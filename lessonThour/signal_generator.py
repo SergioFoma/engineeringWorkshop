@@ -2,11 +2,9 @@ import numpy as np
 import time
 
 def get_sin_wave_amplitude( freq, time ):
-    first = np.sin( 2 * np.pi * freq * time )
-    second = first + 1
-    third = second / 2
+    first = np.arcsin( np.sin( 2 * np.pi * freq * time ) )
 
-    return third
+    return first / 2
 
 
 def wait_for_sampling_period( sampling_frequency ):

@@ -15,6 +15,9 @@ class R2R_DAC:
         string = bin(number)[2:].zfill(8)
         bits = [ int(x) for x in string]
         GPIO.output( self.gpio_bits, bits )
+
+        #if self.verbose:
+        #    voltage = number * 255 / self.dynamic_range
     def set_voltage( self, voltage ):
         number = int( voltage * 255 / self.dynamic_range )
         self.set_number( number )

@@ -1,14 +1,15 @@
 import RPi.GPIO as GPIO
 import r2r_dac as r2r
 import signal_generator as sg
+import mcp4725_driver as mcp
 import time
 
-amplitude = 3
+amplitude = 2
 signal_frequency = 10
 sampling_frequency = 1000
 
 try:
-    dac = r2r.R2R_DAC( [16, 20, 21, 25, 26, 17, 27, 22], 3.183, False )
+    dac = mcp.MCP4725(5)
     
     start_time = time.time()
 
