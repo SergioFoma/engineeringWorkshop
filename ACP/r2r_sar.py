@@ -16,7 +16,7 @@ try:
 
     while (time.time() - start_time) < duration:
         current_time = time.time() - start_time
-        voltage = adc.get_sc_voltage()
+        voltage = adc.get_sar_voltage()
 
         voltage_values.append(voltage)
         time_values.append(current_time)

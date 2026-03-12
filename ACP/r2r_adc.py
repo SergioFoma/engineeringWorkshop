@@ -38,16 +38,36 @@ class R2R_ADC:
 
         return voltage
 
+    def successive_approximation_adc(self):
+        value = 0
+        for i in range( 7, -1, -1):
+            potential_value = value + (2**i)
+            self.number_to_dac(potential_value)
+            time.sleep(self.compare_time)
 
+            comparator_value = GPIO.input(self.comp_gpio)
 
+            if comparator_value == 1:
+                pass
+            else:
+                value = potential_value
 
+        return value
+    
+    def get_sar_voltage(self):
+        digital_value = self.successive_approximation_adc()
+        max_digital_value = 2**len( self.bits_gpio) - 1
+        voltage = ( digital_value / max_digital_value ) * self.dynamic_range
+        return voltage
+
+    
 if __name__ == "__main__":
-    adc = R2R_ADC( 2.5 )
+    adc = R2R_ADC( dynamic_range = 3.3, compare_time = 0.001 )
 
     try:
         while True:
-            voltage = adc.get_sc_voltage()
+            voltage = adc.get_sar_voltage()
             print( "voltage: ", voltage, " B")
-            time.sleep( 0.1 )
+            time.sleep( 0.05 )
     finally:
         adc.deinit()
